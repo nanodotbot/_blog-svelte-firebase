@@ -1,0 +1,269 @@
+:root {
+    font-size: 10px;
+
+    --accent: #aeeddd;
+    --split-complementary-1: #edbeae;
+    --split-complementary-1-lighter: #f8e0de;
+    --split-complementary-2: #edaede;
+    /* https://www.colorhexa.com/aeeddd */
+
+    --accent-0: #edfbf7;
+    --accent-1: #d8f6ef;
+    --accent-2: #c3f2e6;
+    --accent-3: #aeeddd;
+    --accent-4: #99e8d4;
+    --accent-5: #84e4cb;
+    --accent-6: #6fdfc3;
+    --accent-7: #5adaba;
+    --accent-8: #45d6b2;
+    --accent-9: #30d1a9;
+    --accent-10: #2abd99;
+    --accent-11: #25a988;
+    --accent-12: #219477;
+
+    /* https://blog.karenying.com/posts/50-shades-of-dark-mode-gray */
+    /* https://www.colorhexa.com/181818 */
+    --black: black;
+
+    --dark: #181818;
+    --dark-1: #3e3e3e;
+    --dark-2: #323232;
+    --dark-3: #252525;
+    --dark-4: #181818;
+    --dark-5: #0b0b0b;
+    --dark-6: #000000;
+    --dark-7: #000000;
+
+    --background: var(--black);
+    --background-secondary: var(--dark-5);
+
+    --background-transparent: rgba(9, 9, 9, .8);
+    --background-transparent-light: rgba(255, 255, 255, .9);
+    
+    --text: var(--accent-0);
+    --warning: var(--split-complementary-1);
+    --split-complementary-2-light: #f6d8f4;
+
+    --link: var(--accent-4);
+    --link-secondary: var(--accent-2);
+    
+    --button: var(--accent-11);
+    --button-secondary: var(--accent-10);
+    
+    --inverted-text: var(--dark);
+
+    --font-size-normal: 1.6rem;
+    --font-size-small: 1.4rem;
+    --font-size-smallest: 1.2rem;
+
+    --border: .1rem solid var(--background-transparent-light);
+
+    --transition-fast: all .1s ease;
+    --transition-slow: all .5s ease;
+
+    --default-margin: 1.5rem;
+
+    /* firefox scrollbar */
+    scrollbar-width: 1.3rem;
+    scrollbar-color: var(--accent) var(--background);
+}
+
+@font-face {
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 100;
+    src: url('./Karla/static/Karla-ExtraLight.ttf');
+}
+@font-face {
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 200;
+    src: url('./Karla/static/Karla-Light.ttf');
+}
+@font-face {
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 300;
+    src: url('./Karla/static/Karla-Medium.ttf');
+}
+@font-face {
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./Karla/static/Karla-Regular.ttf');
+}
+
+/* chrome scrollbar */
+::-webkit-scrollbar {
+    width: 1.3rem;
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+}
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-moz-selection {
+    background: var(--background-secondary);
+    color: var(--accent);
+}
+::selection {
+    background: var(--background-secondary);
+    color: var(--accent);
+}
+
+html,
+* {
+    box-sizing: border-box;
+
+    margin: 0;
+    padding: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+
+    font-family: 'Karla', serif, 'Calibri Light', 'Calibri', sans-serif;
+    font-weight: 200;
+    font-size: var(--font-size-normal);
+    line-height: 1.6;
+    letter-spacing: .1rem;
+
+    color: var(--text);
+}
+
+html {
+    /* https://css-tricks.com/almanac/properties/s/scroll-snap-type/ */
+	scroll-snap-type: y mandatory;
+	scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--background);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+    text-align: left;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 3.5rem;
+}
+
+h3 {
+    font-size: 3.2rem;
+}
+
+h4 {
+    font-size: 3rem;
+}
+h5 {
+    font-size: 2.8rem;
+}
+h6 {
+    font-size: 2.5rem;
+}
+
+p {
+    margin: 1.5rem auto;
+}
+
+a {
+    font-style: normal;
+    text-decoration: none;
+
+    transition: var(--transition-fast);
+
+    color: var(--link);
+
+    cursor: context-menu;
+}
+
+a:hover {
+    color: var(--link-secondary);
+}
+
+form {
+    margin: var(--default-margin) 0;
+}
+
+input,
+textarea {
+    display: block;
+    width: 100%;;
+
+    padding: 0.3rem .5rem;
+    margin: .1rem auto 2rem auto;
+
+    background-color: var(--background);
+
+    border: none;
+    border-bottom: 0.1rem solid var(--link);
+
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+
+    transition: var(--transition-fast);
+
+    outline: none;
+}
+input:focus,
+textarea:focus {
+    border-bottom: 0.1rem solid var(--link-secondary);
+}
+input {
+    min-height: 3.2rem;
+}
+textarea {
+    resize: none;
+	overflow: hidden; /* prevents scroll bar flash */
+}
+
+
+label {
+    display: block;
+    font-size: var(--font-size-small);
+}
+
+button {
+    /* counteract letter-spacing of .1rem  */
+    padding: .6rem 1.7rem .6rem 1.8rem;
+    
+    border: .1rem solid var(--link);
+    outline: none;
+
+    margin: 0 auto;
+
+    background-color: transparent;
+    color: var(--link);
+}
+
+button:hover {
+    border: .1rem solid var(--link-secondary);
+    color: var(--link-secondary);
+
+    transition: var(--transition-fast);
+}
+
+img, video { /* TODO: check */
+    display: block;
+    max-width: 100%;
+    max-height: 90vh;
+
+    margin: var(--default-margin) 0;
+}
+
+hr {
+    border: 0;
+    border-top: var(--border);
+}
