@@ -63,6 +63,14 @@
         addSrc = Add99e8d4;
     }
 
+    let postAddSrc = [];
+    const handlePostAddFocus = (index) => {
+        postAddSrc[index] = Addc3f2e6;
+    }
+    const handlePostAddBlur = (index) => {
+        postAddSrc[index] = Add99e8d4;
+    }
+
     let logoutSrc = Logout99e8d4;
     const handleLogoutFocus = () => {
         logoutSrc = Logoutc3f2e6;
@@ -77,6 +85,22 @@
     }
     const handleDeleteBlur = () => {
         deleteSrc = Deleteedbeae;
+    }
+
+    let postDeleteSrc = [];
+    const handlePostDeleteFocus = (index) => {
+        postDeleteSrc[index] = Deletef8e0de;
+    }
+    const handlePostDeleteBlur = (index) => {
+        postDeleteSrc[index] = Deleteedbeae;
+    }
+
+    let commentDeleteSrc = [];
+    const handleCommentDeleteFocus = (index) => {
+        commentDeleteSrc[index] = Deletef8e0de;
+    }
+    const handleCommentDeleteBlur = (index) => {
+        commentDeleteSrc[index] = Deleteedbeae;
     }
 
     let preview = '';
@@ -185,6 +209,9 @@
             post.createdAt = new Date(post.createdAt.seconds * 1000).toLocaleString();
             // console.log(post.createdAt);
         });
+        postAddSrc = Array(posts.length).fill(Add99e8d4);
+        postDeleteSrc = Array(posts.length).fill(Deleteedbeae);
+        // console.log(postAddSrc);
     });
 
     let comment = [];
@@ -241,6 +268,7 @@
             commentsFlattened.push(Object.entries(comment));
             commentsFlattened = commentsFlattened.flat(Infinity);
             comment.createdAt = new Date(comment.createdAt.seconds * 1000).toLocaleString();
+            commentDeleteSrc = Array(comments.length).fill(Deleteedbeae);
             // console.log(comment.createdAt);
             // console.log(commentsFlattened);
         });
@@ -359,7 +387,7 @@
 
                         {#if (currentUser === post.uid)}
 
-                            <button class="delete"><img src="{deleteSrc}" alt="add" on:mouseover={handleDeleteFocus} on:focus={handleDeleteFocus} on:mouseout={handleDeleteBlur} on:blur={handleDeleteBlur} on:click={() => handleDelete('Post', post.message, post.id)} on:keydown={() => handleDelete('Post', post.message, post.id)}>
+                            <button class="delete"><img src="{postDeleteSrc[index]}" alt="add" on:mouseover={() => handlePostDeleteFocus(index)} on:focus={() => handlePostDeleteFocus(index)} on:mouseout={() => handlePostDeleteBlur(index)} on:blur={() => handlePostDeleteBlur(index)} on:click={() => handleDelete('Post', post.message, post.id)} on:keydown={() => handleDelete('Post', post.message, post.id)}>
                             </button>
 
                         {/if}
@@ -367,8 +395,9 @@
                     </div>
                 </div>
                 <p class="pstcmmnt">{post.message}</p>
+
                 <button class="comment" class:open={unsichtbar[index]} on:click={() => handleUnsichtbar(index)}>
-                    <img src="{addSrc}" alt="add" on:mouseover={handleAddFocus} on:focus={handleAddFocus} on:mouseout={handleAddBlur} on:blur={handleAddBlur}>
+                    <img src="{postAddSrc[index]}" alt="add" on:mouseover={() => handlePostAddFocus(index)} on:focus={() => handlePostAddFocus(index)} on:mouseout={() => handlePostAddBlur(index)} on:blur={() => handlePostAddBlur(index)}>
                 </button>
             </div>
 
@@ -385,7 +414,7 @@
 
                 {#if (commentsFlattened.includes(post.id))}
                 
-                    {#each comments as cmmnt, index}
+                    {#each comments as cmmnt, indexx}
 
                         {#if (post.id == cmmnt.postid)}
                     
@@ -399,8 +428,8 @@
 
                                     {#if (currentUser === cmmnt.uid)}
 
-                                        <button class="delete" on:mouseover={handleDeleteFocus} on:focus={handleDeleteFocus} on:mouseout={handleDeleteBlur} on:blur={handleDeleteBlur} on:click={() => handleDelete('Kommentar', cmmnt.comment, cmmnt.id)} on:keydown={() => handleDelete('Kommentar', cmmnt.comment, cmmnt.id)}>
-                                            <img src="{deleteSrc}" alt="add">
+                                        <button class="delete" on:mouseover={() => handleCommentDeleteFocus(indexx)} on:focus={() => handleCommentDeleteFocus(indexx)} on:mouseout={() => handleCommentDeleteBlur(indexx)} on:blur={() => handleCommentDeleteBlur(indexx)} on:click={() => handleDelete('Kommentar', cmmnt.comment, cmmnt.id)} on:keydown={() => handleDelete('Kommentar', cmmnt.comment, cmmnt.id)}>
+                                            <img src="{commentDeleteSrc[indexx]}" alt="add">
                                         </button>
 
                                     {/if}

@@ -109,8 +109,8 @@
             fireComments.forEach(fireComment => {
                 comments.push(fireComment.id);
             });
-            console.log('fireComments', fireComments);
-            console.log('comments', comments);
+            // console.log('fireComments', fireComments);
+            // console.log('comments', comments);
             // console.log('end of snapshot');
         });
         onSnapshot(qryU, snapshot => {
@@ -122,8 +122,8 @@
             fireUser.forEach(fireUser => {
                 userU.push(fireUser.id);
             });
-            console.log('fireUser', fireUser);
-            console.log('comments', comments);
+            // console.log('fireUser', fireUser);
+            // console.log('comments', comments);
             // console.log('end of snapshot');
         });
     });
@@ -135,7 +135,7 @@
         <div class="wrapper delete">
             <div class="content">
                 <h3>Account löschen</h3>
-                <p>Möchtest du deinen Acount wirklich löschen? Deine Zugangsdaten und alle deine Posts werden gelöscht. Der Schritt ist unumkehrbar.</p>
+                <p>Möchtest du deinen Acount wirklich löschen? Damit werden erst alle deine Posts und Kommentare gelöscht, danach dein Zugang.<br><br>Damit das Löschen des Accounts funktioniert, ist es notwendig, dass du dich kürzlich angemeldet hast, d. h., du solltest dich vor diesem Schritt sicherheitshalber ab- und wieder anmelden.</p>
                 <button class="delete" on:click|preventDefault={handleDelete}>Ja, endgültig löschen</button>
                 <button on:click={handleRefusal}>Nein, lass mal bleiben</button>
             </div>
