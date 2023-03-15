@@ -1,5 +1,7 @@
 <script>
-    import { loggedIn } from "../stores/firestore";
+    import {
+        fireName
+    } from "../stores/firestore";
     import {
         auth
     } from "../../lib/firebase";
@@ -12,60 +14,123 @@
         getFirestore,
         collection,
         doc,
-        getDocs,
+        onSnapshot,
         deleteDoc,
         where,
         query
     } from "firebase/firestore";
+    import { onMount } from 'svelte';
 
-    const currentUID = localStorage.getItem('uid');
+    const db = getFirestore();
+    const cllctn = collection(db, 'posts');
+    const cllctnC = collection(db, 'comments');
+    const cllctnU = collection(db, 'users');
+
+    let currentUser;
     let feedback = '';
     let open = false;
+    let posts = [];
+    let comments = [];
+    let userU = [];
 
     const openDelete = () => {
         open = true;
     }
 
-    const googleProvider = new GoogleAuthProvider();
-    const reauthWithGoogle = () => {
-        return reauthenticateWithPopup(auth, googleProvider);
+    const deletePosts = () => {
+        posts.forEach(post => {
+            console.log(post);
+            let dcmnt = doc(cllctn, post);
+            deleteDoc(dcmnt)
+                .then(() => console.log('deleted doc:', post.id))
+        });
+    }
+    const deleteComments = () => {
+        comments.forEach(comment => {
+            console.log(comment);
+            let dcmnt = doc(cllctnC, comment);
+            deleteDoc(dcmnt)
+                .then(() => console.log('deleted doc:', comment.id))
+        });
+    }
+    const deleteUserC = () => {
+        userU.forEach(user => {
+            console.log(user);
+            let dcmnt = doc(cllctnU, user);
+            deleteDoc(dcmnt)
+                .then(() => console.log('deleted doc:', user.id))
+        });
+    }
+    const deleteCurrentUser = () => {
+        console.log('here i am');
+        deleteUser(auth.currentUser).then(() => {
+            console.log('user deleted');
+        }).catch(error => {  
+            console.log(error);
+        });
     }
 
-    const db = getFirestore();
-    const cllctn = collection(db, 'posts');
-    const cllctnC = collection(db, 'comments');
-    let posts = [];
-
     const handleDelete = () => {
-        let user = auth.currentUser;
-        console.log(user);
-
-        const qry = query(cllctn, where('uid', '=', currentUID));
-        console.log(qry);
-
-
-        getDocs(qry)
-            .then(snapshot => {
-                snapshot.docs.forEach(doc => {
-                    posts.push({ id: doc.id, ...doc.data() });
-                })
-                console.log(posts);
-            })
-            .catch(err => console.log(err));
-
-
-        // deleteUser(user).then(() => {
-        //     console.log('user deleted');
-        // }).catch(error => {  
-        //     console.log(error);
-        // });
+        // console.log(currentUser);
+        console.log('handleDelete');
+        deletePosts();
+        deleteComments();
+        deleteCurrentUser();
+        deleteUserC();
     }
     const handleRefusal = () => {
         open = false;
     }
+    onMount(() => {
+        currentUser = localStorage.getItem('uid');
+        console.log('delete-onMount:', currentUser);
+        let qry = query(cllctn, where('uid', '==', currentUser));
+        let qryC = query(cllctnC, where('uid', '==', currentUser));
+        let qryU = query(cllctnU, where('uid', '==', currentUser));
+        onSnapshot(qry, snapshot => {
+            let firePosts = [];
+            snapshot.forEach(doc => {
+                let post = {id: doc.id, ...doc.data()};
+                firePosts = [post, ...firePosts];
+            });
+            firePosts.forEach(firePost => {
+                posts.push(firePost.id);
+            });
+            // console.log('firePosts', firePosts);
+            // console.log('posts', posts);
+            // console.log('end of snapshot');
+        });
+        onSnapshot(qryC, snapshot => {
+            let fireComments = [];
+            snapshot.forEach(doc => {
+                let comment = {id: doc.id, ...doc.data()};
+                fireComments = [comment, ...fireComments];
+            });
+            fireComments.forEach(fireComment => {
+                comments.push(fireComment.id);
+            });
+            console.log('fireComments', fireComments);
+            console.log('comments', comments);
+            // console.log('end of snapshot');
+        });
+        onSnapshot(qryU, snapshot => {
+            let fireUser = [];
+            snapshot.forEach(doc => {
+                let user = {id: doc.id, ...doc.data()};
+                fireUser = [user, ...fireUser];
+            });
+            fireUser.forEach(fireUser => {
+                userU.push(fireUser.id);
+            });
+            console.log('fireUser', fireUser);
+            console.log('comments', comments);
+            // console.log('end of snapshot');
+        });
+    });
+
 </script>
 
-{#if loggedIn}
+{#if fireName}
     {#if open}
         <div class="wrapper delete">
             <div class="content">

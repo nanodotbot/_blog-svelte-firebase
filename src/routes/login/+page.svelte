@@ -33,7 +33,7 @@
         signInWithEmailAndPassword(auth, mail, password)
         .then(cred => {
             const user = cred.user;
-            console.log('user logged in:', user);
+            // console.log('user logged in:', user);
             localStorage.setItem('uid', user.uid);
             goto('/');
         })
@@ -67,8 +67,8 @@
         if(mail && password && username) {
             createUserWithEmailAndPassword(auth, mail, password)
             .then(cred => {
-                console.log('user created', cred.user);
-                console.log('uid', cred.user.uid);
+                // console.log('user created', cred.user);
+                // console.log('uid', cred.user.uid);
                 createUserAccount(cred.user.uid);
                 mail = '';
                 password = '';
@@ -118,9 +118,10 @@
     onMount(() => {
         onAuthStateChanged(auth, user => {
             if (user) {
-                console.log('onAuthStateChanged: loggedIn', user);
+                console.log('onAuthStateChanged: loggedIn');
+                // console.log('onAuthStateChanged: loggedIn', user);
                 loggedIn.update(() => true);
-                console.log('user-uid-onauthstatechanged', user.uid);
+                // console.log('user-uid-onauthstatechanged', user.uid);
                 localStorage.setItem('uid', user.uid);
                 goto('/');
             } else {

@@ -97,7 +97,7 @@
             }
             reader.readAsDataURL(file);
         }
-    }
+    };
 
     const handleChange = e => {
         file = e.target.files[0];
@@ -187,30 +187,27 @@
         });
     });
 
-    const handleDelete = () => {
-        console.log('here i am');
-    }
-
     let comment = [];
     let unsichtbar = [];
     //https://stackoverflow.com/questions/57728657/problems-with-toggle-the-display-of-a-div-in-a-nested-svelte-each-block
 
     const handleUnsichtbar = (index) => {
         unsichtbar[index]=!unsichtbar[index];
-    }
+    };
 
     let heights = [];
     const handleHeights = (e, index) => {
         heights[index ] = '';
         heights[index] = e.target.scrollHeight + 1 + 'px';
         // console.log(heights[index]);
-        console.log(e.target.scrollHeight); // why does scrollheigt apply to all elements?
-    }
+        // console.log(e.target.scrollHeight);
+        // why does scrollheigt apply to all elements?
+    };
 
 
     const cllctnC = collection(db, 'comments');
     const handleComment = (id, index) => {
-        console.log(id);
+        // console.log(id);
         if (currentUser && fireName && comment[index] && id){
             addDoc(cllctnC, {
                 uid: currentUser,
@@ -225,7 +222,7 @@
             });
             return;
         }
-    }
+    };
 
     let comments = [];
     let commentsFlattened = [];
@@ -249,20 +246,45 @@
         });
     });
 
+    let docTypeg = '';
+    let docCllctn = '';
+    let docContentg = '';
+    let docIDg = '';
+    let deleteModal = false;
+
+    const deleteForever = () => {
+        const dcmnt = doc(db, docCllctn, docIDg);
+        deleteDoc(dcmnt)
+            .then(() => console.log('deleted:', docTypeg, docContentg, docIDg));
+    };
+
+    const handleDelete = (docType, docContent, docID) => {
+        docTypeg = docType;
+        docContentg = docContent;
+        docIDg = docID;
+        if (docTypeg === 'Post') {docCllctn = 'posts'};
+        if (docTypeg === 'Kommentar') {docCllctn = 'comments'};
+        deleteModal = true;
+    };
+
+    const closeDeleteModal = () => {
+        deleteModal = false;
+    };
+
     let modal = false;
     let bigImg = '';
     const openModal = (e) => {
         bigImg = e.target.src;
-        console.log(e.target.src);
+        // console.log(e.target.src);
         modal = true;
-    }
+    };
     const closeModal = () => {
         modal = false;
-    }
+    };
 
     onMount(() => {
         currentUser = localStorage.getItem('uid');
-        console.log('current user / uid from localStorage is:', currentUser);
+        // console.log('current user / uid from localStorage is:', currentUser);
     });
 </script>
 
@@ -337,7 +359,7 @@
 
                         {#if (currentUser === post.uid)}
 
-                            <button class="delete"><img src="{deleteSrc}" alt="add" on:mouseover={handleDeleteFocus} on:focus={handleDeleteFocus} on:mouseout={handleDeleteBlur} on:blur={handleDeleteBlur} on:click={() => handleDelete}>
+                            <button class="delete"><img src="{deleteSrc}" alt="add" on:mouseover={handleDeleteFocus} on:focus={handleDeleteFocus} on:mouseout={handleDeleteBlur} on:blur={handleDeleteBlur} on:click={() => handleDelete('Post', post.message, post.id)} on:keydown={() => handleDelete('Post', post.message, post.id)}>
                             </button>
 
                         {/if}
@@ -355,7 +377,7 @@
                 <form transition:slide>
                     <label for="comment">Dein Kommentar</label>
                     <textarea type="text" name="comment" bind:value={comment[index]} style:height={heights[index]} on:input={e => handleHeights(e, index)}></textarea>
-                    <button on:click|preventDefault={() => handleComment(post.id, index)}>Kommentar absenden</button>
+                    <button class="send-comment" on:click|preventDefault={() => handleComment(post.id, index)}>Kommentar absenden</button>
                 </form>
 
             {/if}
@@ -374,9 +396,15 @@
                                 </div>
                                 <div class="post-meta-right">
                                     <p class="date">{cmmnt.createdAt}</p>
-                                    <button class="delete">
-                                        <img src="{deleteSrc}" alt="add" on:mouseover={handleDeleteFocus} on:focus={handleDeleteFocus} on:mouseout={handleDeleteBlur} on:blur={handleDeleteBlur}>
-                                    </button>
+
+                                    {#if (currentUser === cmmnt.uid)}
+
+                                        <button class="delete" on:mouseover={handleDeleteFocus} on:focus={handleDeleteFocus} on:mouseout={handleDeleteBlur} on:blur={handleDeleteBlur} on:click={() => handleDelete('Kommentar', cmmnt.comment, cmmnt.id)} on:keydown={() => handleDelete('Kommentar', cmmnt.comment, cmmnt.id)}>
+                                            <img src="{deleteSrc}" alt="add">
+                                        </button>
+
+                                    {/if}
+
                                 </div>
                                 
                             </div>
@@ -404,22 +432,35 @@
 
         {/each}
 
-    {#if (modal)}
+        {#if (modal)}
 
-        <div class="modal" on:click={closeModal} on:keydown={closeModal}>
+            <div class="modal" on:click={closeModal} on:keydown={closeModal}>
 
-            <img src={bigImg} alt="" />
+                <img src={bigImg} alt="" />
 
-        </div>
+            </div>
 
-    {/if}
+        {/if}
 
+        {#if (deleteModal)}
+
+            <div class="deleteModal" on:click={closeDeleteModal} on:keydown={closeDeleteModal}>
+                <div>
+                    <h3>{docTypeg} löschen?</h3>
+                    <p>Möchtest du deinen {docTypeg} wirklich unwiderruflich löschen?</p>
+                    <p class="docContentg">{docContentg}</p>
+                    <button class="deleteBtn" on:click={deleteForever} on:keydown={deleteForever}>Ja, weg damit!</button>
+                    <button>Ne, das ist ein wertvoller Beitrag für den Weltfrieden</button>
+                </div>
+            </div>
+            
+        {/if}
 
     </main>
 
     <footer>
-        <a href="https://notanumber.ch" target="_blank" rel="noopener noreferrer">notanumber.ch</a>
-        <a href="https://emojiterra.com/duck/" target="_blank" rel="noopener noreferrer">emojiterra.com</a>
+        <a href="https://notanumber.ch" target="_blank" rel="noopener noreferrer" class="link">notanumber.ch</a>
+        <a href="https://emojipedia.org/de/ente/" target="_blank" rel="noopener noreferrer" class="link">emojipedia.org</a>
     </footer>
 
 {/if}
@@ -572,7 +613,9 @@
 
         transition: var(--transition-slow);
     }
-    
+    button.send-comment {
+        width: 100%;
+    }
     p.no-comments {
         text-align: center;
     }
@@ -597,6 +640,51 @@
 
         background-color: black;
     }
+
+    div.deleteModal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 5;
+
+        height: 100vh;
+        width: 100vw;
+
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        align-content: center;
+
+        background-color: var(--background-transparent);
+    }
+    div.deleteModal > div {
+        padding: 3rem 4rem 4rem 4rem;
+        background-color: var(--background);
+    }
+    div.deleteModal > div > p,
+    div.deleteModal > div > h3 {
+        width: 100%;
+        text-align: center;
+    }
+    div.deleteModal > div > button {
+        width: 100%;
+        margin-top: 2rem;
+    }
+    div.deleteModal > div > button.deleteBtn {
+        color: var(--warning);
+        border: .1rem solid var(--warning);
+    }
+    div.deleteModal > div > button.deleteBtn:hover {
+        color: var(--split-complementary-1-lighter);
+        border: .1rem solid var(--split-complementary-1-lighter);
+    }
+    div.deleteModal > div > p.docContentg {
+        padding: 1rem;
+        border: .1rem solid var(--split-complementary-1-lighter);
+        font-size: var(--font-size-smallest);
+        overflow: hidden;
+    }
+
     hr {
         border-top: .1rem solid var(--text);
         margin-top: 5rem;

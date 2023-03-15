@@ -37,7 +37,7 @@
     --background: var(--black);
     --background-secondary: var(--dark-5);
 
-    --background-transparent: rgba(9, 9, 9, .8);
+    --background-transparent: rgba(9, 9, 9, .9);
     --background-transparent-light: rgba(255, 255, 255, .9);
     
     --text: var(--accent-0);
