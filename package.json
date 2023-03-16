@@ -16,7 +16,7 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource/karla": "^4.5.11",
-		"firebase": "^9.17.1",
+		"firebase": "^9.17.2",
 		"uuid": "^9.0.0"
 	}
 }
