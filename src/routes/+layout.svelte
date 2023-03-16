@@ -13,7 +13,6 @@
         where
     } from 'firebase/firestore';
 
-
     onMount(() => {
         onAuthStateChanged(auth, user => {
             if (user) {
