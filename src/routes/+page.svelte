@@ -162,7 +162,7 @@
         }
 
         if (file && message && currentUser && fireName) {
-            if(file.size > 1500000) {
+            if(file.size > 15000000) {
                 feedback = 'Die Dateigrösse darf 15 Megabyte nicht überschreiten';
                 return;
             }
