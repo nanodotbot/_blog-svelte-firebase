@@ -316,6 +316,10 @@
     });
 </script>
 
+<svelte:head>
+    <title>Blog</title> 
+</svelte:head>
+
 {#if currentUser}
 
     <header>

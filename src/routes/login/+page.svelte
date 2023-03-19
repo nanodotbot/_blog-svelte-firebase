@@ -133,6 +133,10 @@
     });
 </script>
 
+<svelte:head>
+    <title>Login</title> 
+</svelte:head>
+
 {#if !register}
 
     <div class="form-wrapper">

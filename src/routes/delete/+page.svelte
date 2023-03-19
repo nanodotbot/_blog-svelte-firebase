@@ -130,6 +130,10 @@
 
 </script>
 
+<svelte:head>
+    <title>Löschen</title> 
+</svelte:head>
+
 {#if fireName}
     {#if open}
         <div class="wrapper delete">
