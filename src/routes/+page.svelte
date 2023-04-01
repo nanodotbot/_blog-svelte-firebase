@@ -560,11 +560,11 @@
         padding: 0;
 
         font-size: var(--font-size-small);
-        color: var(--split-complementary-2);
+        color: var(--link-text);
         line-height: normal;
     }
     .side-options > a:hover {
-        color: var(--split-complementary-2-light)
+        color: var(--link-hover-text)
     }
 
     main {
@@ -635,7 +635,7 @@
         margin-top: .3rem;
     }
     p.name {
-        color: var(--split-complementary-2);
+        color: var(--link-text);
     }
     p.date {
         color: whitesmoke;
