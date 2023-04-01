@@ -182,11 +182,13 @@
         margin-top: 2rem;
     }
     button.delete {
-        color: var(--warning);
-        border: .1rem solid var(--warning);
+        color: var(--black);
+        background-color: var(--split-complementary-1);
+        border: .1rem solid var(--black);
     }
     button.delete:hover {
-        color: var(--split-complementary-1-lighter);
+        color: var(--black);
+        background-color: var(--split-complementary-1-lighter);
         border: .1rem solid var(--split-complementary-1-lighter);
     }
     p.feedback {

@@ -104,8 +104,8 @@
     }
 
     let preview = '';
-    let border = '.1rem var(--link) dashed';
-    let color = 'var(--link)';
+    let border = '.1rem var(--link-text) dashed';
+    let color = 'var(--link-text)';
     let height;
     
     let file;
@@ -129,12 +129,12 @@
     }
 
     const dragIn = () => {
-        border = '.1rem var(--link-secondary) dashed';
-        color = 'var(--link-secondary)';
+        border = '.1rem var(--link-hover-text) dashed';
+        color = 'var(--link-hover-text)';
     }
     const dragOut = () => {
-        border = '.1rem var(--link) dashed';
-        color = 'var(--link)';
+        border = '.1rem var(--link-text) dashed';
+        color = 'var(--link-text)';
     }
 
     const handleDrop = e => {
@@ -332,7 +332,7 @@
 
             <a href="./delete/" class="firename">{$fireName}</a>
 
-            <button on:click={logout}>
+            <button class="logout" on:click={logout}>
 
                 <img src={logoutSrc} alt="logout" on:mouseover={handleLogoutFocus} on:focus={handleLogoutFocus} on:mouseout={handleLogoutBlur} on:blur={handleLogoutBlur}>
 
@@ -502,6 +502,7 @@
 
     header {
         display: grid;
+        height: calc(3 * var(--default-gap));
         width: 100%;
         grid-template-columns: 1fr 1fr 1fr;
         align-items: center;
@@ -511,17 +512,33 @@
         justify-self: center;
 
         padding: 0;
-        margin-bottom: .3rem;
+        margin: 0;
         border: none;
 
         font-size: 4rem;
+
+        background-color: var(--background);
 
         transition: var(--transition-slow);
     }
     .open {
         rotate: 45deg;
     }
+    button#menu-button > img {
+        padding: 0;
+        margin: 0;
+    }
     
+    button.logout {
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+    }
+    button.logout > img {
+        padding: 0;
+        margin: 0;
+    }
+
     div.side-options {
         grid-column-start: 3;
         justify-self: end !important;
@@ -530,6 +547,7 @@
         grid-template-columns: auto auto;
         justify-content: end;
         align-items: center;
+        gap: var(--default-gap);
 
         padding-right: 1rem;
     }
@@ -539,7 +557,7 @@
     }
     .side-options > a {
         overflow: hidden;
-        padding: 0rem var(--default-margin) 0rem 0rem;
+        padding: 0;
 
         font-size: var(--font-size-small);
         color: var(--split-complementary-2);
@@ -560,7 +578,7 @@
     div#drop-area {
         padding: 2rem 1rem;
         text-align: center;
-        margin-bottom: var(--default-margin);
+        margin-bottom: var(--default-gap);
     }
     form > img {
         margin-left: auto;
@@ -579,6 +597,7 @@
     img.post-picture {
         margin-left: auto;
         margin-right: auto;
+        margin-bottom: calc(var(--default-gap) / 2);
     }
     img.post-picture:hover {
         filter: brightness(110%);
@@ -625,6 +644,8 @@
     button.delete {
         padding: 0;
         border: none;
+
+        background-color: transparent;
     }
     button.delete > img {
         padding: 0;
@@ -644,8 +665,15 @@
 
         font-size: 4rem;
 
+        background-color: transparent;
+
         transition: var(--transition-slow);
     }
+    button.comment > img {
+        padding: 0;
+        margin: 0;
+    }
+
     button.send-comment {
         width: 100%;
     }
@@ -704,11 +732,13 @@
         margin-top: 2rem;
     }
     div.deleteModal > div > button.deleteBtn {
-        color: var(--warning);
-        border: .1rem solid var(--warning);
+        color: var(--black);
+        background-color: var(--split-complementary-1);
+        border: .1rem solid var(--black);
     }
     div.deleteModal > div > button.deleteBtn:hover {
-        color: var(--split-complementary-1-lighter);
+        color: var(--black);
+        background-color: var(--split-complementary-1-lighter);
         border: .1rem solid var(--split-complementary-1-lighter);
     }
     div.deleteModal > div > p.docContentg {
@@ -731,7 +761,7 @@
     footer > a {
         display: block;
         font-size: var(--font-size-small);
-        margin-bottom: var(--default-margin);
+        margin-bottom: var(--default-gap);
     }   
 
     @media only screen and (max-width: 730px) {

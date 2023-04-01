@@ -2,6 +2,7 @@
     font-size: 10px;
 
     --accent: #aeeddd;
+    --split-complementary-0: #df8c6f;
     --split-complementary-1: #edbeae;
     --split-complementary-1-lighter: #f8e0de;
     --split-complementary-2: #edaede;
@@ -21,9 +22,35 @@
     --accent-11: #25a988;
     --accent-12: #219477;
 
-    /* https://blog.karenying.com/posts/50-shades-of-dark-mode-gray */
-    /* https://www.colorhexa.com/181818 */
+    --white: white;
     --black: black;
+    --grey-darker: #0b0b0b;
+    --grey: #656565;
+    --grey-lighter: #bfbfbf;
+    --grey-lightest: #f2f2f2;
+
+    --blue-lightest: #ecf8fb;
+    --green-lightest: #eefaf3;
+    --red-lightest: #faf1f0;
+    --blue-light: #d7f0f7;
+    --green-light: #daf4e5;
+    --red-light: #f4dfdd;
+    --blue-default: #aedded;
+    --green-default: #9fe2bf;
+    --red-default: #eecec9;
+    --blue-darker: #99dbe8;
+    --green-darker: #8bdcb2;
+    --red-darker: #e8bcb6;
+    --blue-darkest: #2593a8;
+    --green-darkest: #309e65;
+    --red-darkest: #c45242;
+
+    --theme: var(--dark);
+    --theme-contrast: var(--white);
+    --footer: var(--dark);
+
+    --theme-independent-dark-text: var(--black);
+    --theme-independent-light-text: var(--white);
 
     --dark: #181818;
     --dark-1: #3e3e3e;
@@ -34,22 +61,53 @@
     --dark-6: #000000;
     --dark-7: #000000;
 
-    --background: var(--black);
+    --background: var(--dark);
     --background-secondary: var(--dark-5);
 
     --background-transparent: rgba(9, 9, 9, .9);
     --background-transparent-light: rgba(255, 255, 255, .9);
     
-    --text: var(--accent-0);
+    --text: white;
+    --selection-text: var(--white);
+    --selection-bg: var(--grey-darker);
     --warning: var(--split-complementary-1);
     --split-complementary-2-light: #f6d8f4;
 
+
+    --link-text: var(--blue-light);
+    --link-bg: var(--dark);
+    --link-hover-text: var(--blue-default);
+    --link-hover-bg: var(--grey-darker);
+
+    --link-contrast-text: var(--blue-lightest);
+    --link-contrast-bg: var(--grey-darker);
+    --link-contrast-hover-text: var(--blue-light);
+    --link-contrast-hover-bg: var(--black);
+
+    
     --link: var(--accent-4);
     --link-secondary: var(--accent-0);
-    
+
+    --button-text: var(--black);
+    --button-bg: var(--blue-default);
+    --button-hover-text: var(--blue-darkest);
+    --button-hover-bg: var(--blue-light);
+
     --button: var(--accent-11);
     --button-secondary: var(--accent-10);
     
+    --input-text: var(--text);
+    --input-border: var(--grey-lighter);
+    --input-focus-border: var(--blue-default);
+    
+    --toggle-bg: var(--grey-lighter);
+    --toggle-checked-bg: var(--blue-light);
+    --toggle-switch-color: var(--blue-darker);
+    --toggle-switch-bg: var(--blue-darker);
+
+    --scroll-thumb: var(--blue-darker);
+    --scroll-track: var(--dark);
+
     --inverted-text: var(--dark);
 
     --font-size-normal: 1.6rem;
@@ -61,11 +119,12 @@
     --transition-fast: all .1s ease;
     --transition-slow: all .5s ease;
 
-    --default-margin: 1.5rem;
+    --default-margin: 1.5rem auto;
+    --default-gap: 1.5rem;
 
     /* firefox scrollbar */
     scrollbar-width: 1.3rem;
-    scrollbar-color: var(--accent) var(--background);
+    scrollbar-color: var(--scroll-thumb) var(--scroll-track);
 }
 
 @font-face {
@@ -98,19 +157,19 @@
     width: 1.3rem;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: var(--accent);
+    background-color: var(--scroll-thumb);
 }
 ::-webkit-scrollbar-track {
-    background: var(--background);
+    background: var(--scroll-track);
 }
 
 ::-moz-selection {
-    background: var(--background-secondary);
-    color: var(--accent);
+    color: var(--selection-text);
+    background-color: var(--selection-bg);
 }
 ::selection {
-    background: var(--background-secondary);
-    color: var(--accent);
+    color: var(--selection-text);
+    background-color: var(--selection-bg);
 }
 
 html,
@@ -183,17 +242,18 @@ a {
 
     transition: var(--transition-fast);
 
-    color: var(--link);
+    color: var(--link-text);
 
     cursor: context-menu;
 }
 
 a:hover {
-    color: var(--link-secondary);
+    color: var(--link-hover-text);
+    background-color: var(--link-hover-bg);
 }
 
 form {
-    margin: var(--default-margin) 0;
+    margin: var(--default-margin);
 }
 
 input,
@@ -207,7 +267,7 @@ textarea {
     background-color: var(--background);
 
     border: none;
-    border-bottom: 0.1rem solid var(--link);
+    border-bottom: 0.1rem solid var(--input-border);
 
     box-shadow: none;
     -moz-box-shadow: none;
@@ -219,7 +279,7 @@ textarea {
 }
 input:focus,
 textarea:focus {
-    border-bottom: 0.1rem solid var(--link-secondary);
+    border-bottom: 0.1rem solid var(--input-focus-border);
 }
 input {
     min-height: 3.2rem;
@@ -237,22 +297,28 @@ label {
 
 button {
     /* counteract letter-spacing of .1rem  */
-    padding: .6rem 1.7rem .6rem 1.8rem;
+    padding: .7rem 2rem;
     
-    border: .1rem solid var(--link);
+    border: none;
     outline: none;
+    border-radius: .2rem;
 
-    margin: 0 auto;
+    margin: 0 auto 1rem auto;
 
-    background-color: transparent;
-    color: var(--link);
+    background-color: var(--button-bg);
+    color: var(--button-text);
 }
 
 button:hover {
-    border: .1rem solid var(--link-secondary);
-    color: var(--link-secondary);
+    color: var(--button-hover-text);
+    background-color: var(--button-hover-bg);
 
     transition: var(--transition-fast);
+}
+
+button.disabled {
+    color: var(--button-disabled-text);
+    background-color: var(--button-disabled-bg);
 }
 
 img, video { /* TODO: check */

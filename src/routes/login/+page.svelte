@@ -221,5 +221,12 @@
         width: auto;
         border: none;
         font-size: var(--font-size-small);
+
+        color: var(--link-text);
+        background-color: var(--background);
+    }
+    button.inlineBtn:hover {
+        color: var(--link-hover-text);
+        background-color: var(--link-hover-bg);
     }
 </style>
