@@ -160,7 +160,7 @@
 {:else}
 
     <div class="form-wrapper">
-        <h3>Registrieren</h3>
+        <!-- <h3>Registrieren</h3>
         <form>
             <div>
                 <label for="mail">Mailadresse</label>
@@ -177,7 +177,7 @@
             <button on:click|preventDefault={handleRegister}>Registrieren</button>
         </form>
         <p class="feedback">{feedback}</p>
-        <p class="hint">Bereits einen Account? <button class="inlineBtn" on:click={handleSwitch}>Anmelden</button></p>
+        <p class="hint">Bereits einen Account? <button class="inlineBtn" on:click={handleSwitch}>Anmelden</button></p> -->
     </div>
 
 {/if}
