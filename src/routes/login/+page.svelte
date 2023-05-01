@@ -63,41 +63,41 @@
         console.log('user created');
     };
 
-    const handleRegister = () => {
-        if(mail && password && username) {
-            createUserWithEmailAndPassword(auth, mail, password)
-            .then(cred => {
-                // console.log('user created', cred.user);
-                // console.log('uid', cred.user.uid);
-                createUserAccount(cred.user.uid);
-                mail = '';
-                password = '';
-                username = '';
-                console.log('end of register');
-            })
-            .catch(err => {
-                switch(err.code) {
-                    case 'auth/invalid-email':
-                        feedback = 'Ungültige Mailadresse';
-                        break;
-                    case 'auth/invalid-email':
-                        feedback = 'Ungültiges Passwort ';
-                        break;
-                    case 'auth/weak-password':
-                        feedback = 'Passwort muss mindestens sechs Zeichen lang sein';
-                        break;
-                    case 'auth/email-already-in-use':
-                        feedback = 'E-Mail-Adresse bereits vergeben';
-                        break;
-                    default:
-                        feedback = 'Bitte Eingaben überprüfen';
-                        console.log(err.code);
-                }
-            })
-        } else {
-            feedback = 'Bitte Angaben vervollständigen';
-        }
-    }
+    // const handleRegister = () => {
+    //     if(mail && password && username) {
+    //         createUserWithEmailAndPassword(auth, mail, password)
+    //         .then(cred => {
+    //             // console.log('user created', cred.user);
+    //             // console.log('uid', cred.user.uid);
+    //             createUserAccount(cred.user.uid);
+    //             mail = '';
+    //             password = '';
+    //             username = '';
+    //             console.log('end of register');
+    //         })
+    //         .catch(err => {
+    //             switch(err.code) {
+    //                 case 'auth/invalid-email':
+    //                     feedback = 'Ungültige Mailadresse';
+    //                     break;
+    //                 case 'auth/invalid-email':
+    //                     feedback = 'Ungültiges Passwort ';
+    //                     break;
+    //                 case 'auth/weak-password':
+    //                     feedback = 'Passwort muss mindestens sechs Zeichen lang sein';
+    //                     break;
+    //                 case 'auth/email-already-in-use':
+    //                     feedback = 'E-Mail-Adresse bereits vergeben';
+    //                     break;
+    //                 default:
+    //                     feedback = 'Bitte Eingaben überprüfen';
+    //                     console.log(err.code);
+    //             }
+    //         })
+    //     } else {
+    //         feedback = 'Bitte Angaben vervollständigen';
+    //     }
+    // }
 
     const handleReset = () => {
         if (!mail) {
@@ -153,7 +153,7 @@
             <button on:click|preventDefault={handleLogin}>Anmelden</button>
         </form>
         <p class="feedback">{feedback}</p>
-        <p class="hint hint-1">Noch keinen Account? <button class="inlineBtn" on:click={handleSwitch}>Registrieren</button></p>
+        <!-- <p class="hint hint-1">Noch keinen Account? <button class="inlineBtn" on:click={handleSwitch}>Registrieren</button></p> -->
         <p class="hint">Passwort vergessen? <button class="inlineBtn" on:click={handleReset}>Passwort zurücksetzen</button></p>
     </div>
 
